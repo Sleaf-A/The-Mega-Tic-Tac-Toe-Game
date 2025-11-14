@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mega Tic Tac Toe</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="top-header">
+    <h1 class="title">Mega Tic Tac Toe</h1>
+
+    <div class="ui-right">
+      <select id="modeSelect">
+        <option value="multi">Multiplayer</option>
+        <option value="single">Single Player (vs AI)</option>
+      </select>
+      <button id="tutorialBtn">Tutorial</button>
+      <button id="resetBtn">Restart</button>
+    </div>
+  </header>
+
+  <section id="tutorialPanel" class="tutorial hidden">
+    <h2>How to Play</h2>
+    <p>Each square contains a mini tic-tac-toe board.</p>
+    <p>Where you play inside a mini-board sends your opponent to the matching board.</p>
+    <p>Win mini-boards to claim large squares. Win 3 large squares in a row to win!</p>
+    <button id="closeTutorial">Close</button>
+  </section>
+
+  <main>
+    <div id="scoreboard">
+      <span>X Wins: <strong id="xWins">0</strong></span>
+      <span>O Wins: <strong id="oWins">0</strong></span>
+      <span>Draws: <strong id="draws">0</strong></span>
+    </div>
+
+    <div id="message" class="message">Player X starts — play anywhere</div>
+
+    <div id="big-board" class="big-board">
+      <!-- 9 mini boards -->
+      <div class="mini-board" data-board="0">
+        <div class="cell" data-board="0" data-cell="0"></div>
+        <div class="cell" data-board="0" data-cell="1"></div>
+        <div class="cell" data-board="0" data-cell="2"></div>
+        <div class="cell" data-board="0" data-cell="3"></div>
+        <div class="cell" data-board="0" data-cell="4"></div>
+        <div class="cell" data-board="0" data-cell="5"></div>
+        <div class="cell" data-board="0" data-cell="6"></div>
+        <div class="cell" data-board="0" data-cell="7"></div>
+        <div class="cell" data-board="0" data-cell="8"></div>
+      </div>
+
+      <div class="mini-board" data-board="1">
+        <div class="cell" data-board="1" data-cell="0"></div>
+        <div class="cell" data-board="1" data-cell="1"></div>
+        <div class="cell" data-board="1" data-cell="2"></div>
+        <div class="cell" data-board="1" data-cell="3"></div>
+        <div class="cell" data-board="1" data-cell="4"></div>
+        <div class="cell" data-board="1" data-cell="5"></div>
+        <div class="cell" data-board="1" data-cell="6"></div>
+        <div class="cell" data-board="1" data-cell="7"></div>
+        <div class="cell" data-board="1" data-cell="8"></div>
+      </div>
+
+      <div class="mini-board" data-board="2">
+        <div class="cell" data-board="2" data-cell="0"></div>
+        <div class="cell" data-board="2" data-cell="1"></div>
+        <div class="cell" data-board="2" data-cell="2"></div>
+        <div class="cell" data-board="2" data-cell="3"></div>
+        <div class="cell" data-board="2" data-cell="4"></div>
+        <div class="cell" data-board="2" data-cell="5"></div>
+        <div class="cell" data-board="2" data-cell="6"></div>
+        <div class="cell" data-board="2" data-cell="7"></div>
+        <div class="cell" data-board="2" data-cell="8"></div>
+      </div>
+
+      <div class="mini-board" data-board="3">
+        <div class="cell" data-board="3" data-cell="0"></div>
+        <div class="cell" data-board="3" data-cell="1"></div>
+        <div class="cell" data-board="3" data-cell="2"></div>
+        <div class="cell" data-board="3" data-cell="3"></div>
+        <div class="cell" data-board="3" data-cell="4"></div>
+        <div class="cell" data-board="3" data-cell="5"></div>
+        <div class="cell" data-board="3" data-cell="6"></div>
+        <div class="cell" data-board="3" data-cell="7"></div>
+        <div class="cell" data-board="3" data-cell="8"></div>
+      </div>
+
+      <div class="mini-board" data-board="4">
+        <div class="cell" data-board="4" data-cell="0"></div>
+        <div class="cell" data-board="4" data-cell="1"></div>
+        <div class="cell" data-board="4" data-cell="2"></div>
+        <div class="cell" data-board="4" data-cell="3"></div>
+        <div class="cell" data-board="4" data-cell="4"></div>
+        <div class="cell" data-board="4" data-cell="5"></div>
+        <div class="cell" data-board="4" data-cell="6"></div>
+        <div class="cell" data-board="4" data-cell="7"></div>
+        <div class="cell" data-board="4" data-cell="8"></div>
+      </div>
+
+      <div class="mini-board" data-board="5">
+        <div class="cell" data-board="5" data-cell="0"></div>
+        <div class="cell" data-board="5" data-cell="1"></div>
+        <div class="cell" data-board="5" data-cell="2"></div>
+        <div class="cell" data-board="5" data-cell="3"></div>
+        <div class="cell" data-board="5" data-cell="4"></div>
+        <div class="cell" data-board="5" data-cell="5"></div>
+        <div class="cell" data-board="5" data-cell="6"></div>
+        <div class="cell" data-board="5" data-cell="7"></div>
+        <div class="cell" data-board="5" data-cell="8"></div>
+      </div>
+
+      <div class="mini-board" data-board="6">
+        <div class="cell" data-board="6" data-cell="0"></div>
+        <div class="cell" data-board="6" data-cell="1"></div>
+        <div class="cell" data-board="6" data-cell="2"></div>
+        <div class="cell" data-board="6" data-cell="3"></div>
+        <div class="cell" data-board="6" data-cell="4"></div>
+        <div class="cell" data-board="6" data-cell="5"></div>
+        <div class="cell" data-board="6" data-cell="6"></div>
+        <div class="cell" data-board="6" data-cell="7"></div>
+        <div class="cell" data-board="6" data-cell="8"></div>
+      </div>
+
+      <div class="mini-board" data-board="7">
+        <div class="cell" data-board="7" data-cell="0"></div>
+        <div class="cell" data-board="7" data-cell="1"></div>
+        <div class="cell" data-board="7" data-cell="2"></div>
+        <div class="cell" data-board="7" data-cell="3"></div>
+        <div class="cell" data-board="7" data-cell="4"></div>
+        <div class="cell" data-board="7" data-cell="5"></div>
+        <div class="cell" data-board="7" data-cell="6"></div>
+        <div class="cell" data-board="7" data-cell="7"></div>
+        <div class="cell" data-board="7" data-cell="8"></div>
+      </div>
+
+      <div class="mini-board" data-board="8">
+        <div class="cell" data-board="8" data-cell="0"></div>
+        <div class="cell" data-board="8" data-cell="1"></div>
+        <div class="cell" data-board="8" data-cell="2"></div>
+        <div class="cell" data-board="8" data-cell="3"></div>
+        <div class="cell" data-board="8" data-cell="4"></div>
+        <div class="cell" data-board="8" data-cell="5"></div>
+        <div class="cell" data-board="8" data-cell="6"></div>
+        <div class="cell" data-board="8" data-cell="7"></div>
+        <div class="cell" data-board="8" data-cell="8"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
