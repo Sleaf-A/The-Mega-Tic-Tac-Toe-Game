@@ -1,0 +1,198 @@
+:root{
+  --bg: #0b0f12;
+  --card: #0f1720;
+  --accent: #00ffc2;
+  --muted: #99a0ab;
+  --x-color: #ffcb6b;
+  --o-color: #7be3ff;
+  --win-bg: rgba(0,255,194,0.06);
+}
+
+/* Reset + base */
+* { box-sizing: border-box; }
+html,body { height: 100%; }
+body{
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg,#030405 0%, var(--bg) 100%);
+  color: #e6eef6;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px;
+}
+
+/* Top header */
+.top-header{
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.title{
+  margin: 0;
+  color: var(--accent);
+  font-size: 28px;
+  letter-spacing: 1px;
+  text-shadow: 0 6px 20px rgba(0,255,194,0.04);
+}
+
+/* right-side UI in header */
+.ui-right{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.ui-right select,
+.ui-right button{
+  background: var(--card);
+  color: #e6eef6;
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.ui-right select:focus,
+.ui-right button:focus{
+  outline: none;
+  box-shadow: 0 0 10px rgba(0,255,194,0.08);
+  border-color: var(--accent);
+}
+#resetBtn { background: var(--accent); color: #000; }
+
+/* Tutorial panel */
+.tutorial{
+  width: min(900px, 96%);
+  max-width: 900px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 12px;
+  color: var(--muted);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.tutorial h2{ margin-top: 0; color: var(--accent); }
+.tutorial button{ margin-top: 8px; background: var(--accent); color: #000; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight:700; }
+
+/* Utility */
+.hidden{ display: none; }
+
+/* Scoreboard + message */
+#scoreboard {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-weight: 700;
+}
+#scoreboard strong{ color: #fff; margin-left: 6px; }
+
+/* Message display */
+.message{
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Big board container */
+.big-board{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+  width: min(920px, 92vw);
+  max-width: 920px;
+  margin: 0 auto 20px;
+}
+
+/* Mini-board */
+.mini-board{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 10px;
+  background: linear-gradient(180deg,#0f1114,#0b0d10);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  position: relative;
+  border: 2px solid rgba(255,255,255,0.03);
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, opacity 300ms ease;
+}
+
+/* Highlight playable boards */
+.mini-board.active{
+  transform: translateY(-4px);
+  border-color: rgba(0,255,194,0.18);
+  box-shadow: 0 10px 30px rgba(0,255,194,0.08), inset 0 0 36px rgba(0,255,194,0.02);
+}
+
+/* When a mini-board is won — collapse and show symbol */
+.mini-board.won{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--win-bg);
+  border-color: rgba(255,255,255,0.08);
+  cursor: default;
+}
+.mini-board.won::after{
+  /* show big symbol */
+  content: attr(data-winner);
+  position: absolute;
+  inset: 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.12);
+  pointer-events: none;
+}
+
+/* Individual cells */
+.cell{
+  background: linear-gradient(180deg,#111318,#0f1417);
+  border-radius: 8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 120ms ease, background 120ms ease, box-shadow 120ms ease;
+  min-height: 0;
+  aspect-ratio: 1/1;
+}
+.cell:hover { transform: scale(1.03); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+
+/* X / O styling */
+.cell.x{ color: var(--x-color); font-size: 26px; }
+.cell.o{ color: var(--o-color); font-size: 26px; }
+.cell.last{ outline: 3px solid rgba(255,255,255,0.04); }
+
+/* If mini-board is won hide the inner cells */
+.mini-board.won .cell { display: none; }
+
+/* Footer / responsiveness */
+@media (max-width: 900px) {
+  .title{ font-size: 22px; }
+  .big-board{ gap: 10px; }
+}
+@media (max-width: 600px) {
+  .big-board{ grid-template-columns: repeat(3, 1fr); gap: 8px; width: 96vw; }
+  .mini-board { gap: 6px; padding: 6px; }
+  .cell { font-size: 18px; }
+}
+
+/* Small visual helpers for tutorial & instructions */
+.small-muted { color: var(--muted); font-size: 13px; }
